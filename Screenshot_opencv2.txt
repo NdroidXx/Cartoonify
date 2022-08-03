@@ -1,0 +1,29 @@
+cam = cv2.VideoCapture(0) # Open Webcam
+cv2.namedWindow("test") # Frame Name
+img_counter = 0 # Number of Images Taken
+
+while True:
+    ret, frame = cam.read()
+
+    if not ret:
+        print("failed to grab frame")
+        break
+    cv2.imshow("test", frame)
+
+    k = cv2.waitKey(1) # Key to select Options
+
+    if k%256 == 27:
+        # ESC pressed
+        print("Escape hit, closing...")
+        break
+    
+    elif k%256 == 32:
+        # SPACE pressed
+        img_name = f"Cartoonify_{img_counter}.png" 
+        cv2.imwrite(img_name, frame) # Write image to the directory 
+        print(f"{img_name} written!") # Print the image name 
+        img_counter += 1
+
+cam.release()
+
+cv2.destroyAllWindows()
